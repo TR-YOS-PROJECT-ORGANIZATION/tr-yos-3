@@ -1,10 +1,10 @@
 import React from 'react';
-import CardHome from './components/CardHome';
+import CardHomeIntro from './components/CardHomeIntro';
 
 function App() {
   return (
     <div>
-    <CardHome/>
+    <CardHomeIntro/>
     </div>
   );
 }
