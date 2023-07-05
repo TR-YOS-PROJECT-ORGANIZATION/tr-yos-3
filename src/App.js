@@ -6,7 +6,7 @@ import CardHomeIntro from './components/CardHomeIntro';
 function App() {
   return (
     <BrowserRouter>
-    <Navbar/>
+    <HomeNavbar/>
     <Routes>
       <Route path="/" element={<CardHomeIntro/>}/>
     </Routes>
