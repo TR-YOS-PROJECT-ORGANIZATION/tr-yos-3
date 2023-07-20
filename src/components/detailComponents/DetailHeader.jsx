@@ -2,41 +2,48 @@ import { initLightboxJS } from "lightbox.js-react";
 import "lightbox.js-react/dist/index.css";
 import { SlideshowLightbox } from "lightbox.js-react";
 import { useEffect } from "react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
-
 import {
   EffectCoverflow,
   Pagination,
   Autoplay,
   Navigation,
 } from "swiper/modules";
+
+const dataImages = [
+  "https://swiperjs.com/demos/images/nature-1.jpg",
+  "https://swiperjs.com/demos/images/nature-2.jpg",
+  "https://swiperjs.com/demos/images/nature-3.jpg",
+  "https://swiperjs.com/demos/images/nature-4.jpg",
+  "https://swiperjs.com/demos/images/nature-5.jpg",
+  "https://swiperjs.com/demos/images/nature-6.jpg",
+  "https://swiperjs.com/demos/images/nature-7.jpg",
+  "https://swiperjs.com/demos/images/nature-8.jpg",
+];
 const DetailHeader = () => {
   useEffect(() => {
     initLightboxJS("Insert your License Key here", "Insert plan type here");
   }, []);
   return (
-    <div className="bg-gradient-black-white">
+    <div className="bg-gradient-black-white ">
       <Swiper
         style={{
           "--swiper-navigation-color": "#fff",
           "--swiper-pagination-color": "#fff",
-          padding: "8rem 0",
         }}
         effect={"coverflow"}
         spaceBetween={10}
         grabCursor={true}
         centeredSlides={true}
-        slidesPerView={4}
+        slidesPerView={5}
         loop={true}
         coverflowEffect={{
-          rotate: 50,
+          rotate: 35,
           stretch: 0,
           depth: 100,
           modifier: 1,
@@ -44,56 +51,20 @@ const DetailHeader = () => {
         }}
         autoplay={{
           delay: 5000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         navigation={true}
         pagination={true}
         modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
-        className="mySwiper"
+        className="main-swiper"
       >
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img
-              className=""
-              src="https://swiperjs.com/demos/images/nature-2.jpg"
-            />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideshowLightbox>
-            <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-          </SlideshowLightbox>
-        </SwiperSlide>
+        {dataImages?.map((item, index) => (
+          <SwiperSlide key={index} className="data-swiper-slider">
+            <SlideshowLightbox>
+              <img src={item} className="swiper-image" />
+            </SlideshowLightbox>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
