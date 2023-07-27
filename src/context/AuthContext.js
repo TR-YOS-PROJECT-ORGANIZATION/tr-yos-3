@@ -47,8 +47,13 @@ const AuthContextProvider = ({ children }) => {
         },
       });
 
-      setCurrentUser(data.userID);
-      sessionStorage.setItem("user", JSON.stringify(data.userID));
+      setCurrentUser(data);
+      sessionStorage.setItem("user", JSON.stringify(data));
+
+      // sessionStorage.setItem("user", JSON.stringify(data.userID))
+
+      // setCurrentUser(data.userID);
+      // sessionStorage.setItem("user", JSON.stringify(data.userID));
 
       navigate("/");
     } catch (error) {

@@ -19,6 +19,7 @@ const ALLDEPARTMENTS_API = `https://tr-yös.com/api/v1/record/alldepartments.php
 const COMPARE_ADD_API = `https://tr-yös.com/api/v1/users/addcompare.php?`;
 const COMPARE_GET_API = `https://tr-yös.com/api/v1/users/allcompares.php?`;
 const COMPARE_DEL_API = `https://tr-yös.com/api/v1/users/deletecompare.php?`;
+const DELETE_APİ = ` https://tr-yös.com/api/v1/users/deletecompare.php?`;
 
 const HomeContextProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
@@ -53,7 +54,7 @@ const HomeContextProvider = ({ children }) => {
     }
     return array;
   };
-
+  console.log(userID);
   useEffect(
     (id) => {
       getCities();
@@ -62,7 +63,7 @@ const HomeContextProvider = ({ children }) => {
       getAllDepartments();
       if (currentUser) {
         getLikes(id);
-        getCompare();
+        getCompare(id);
       }
     },
     [currentUser]
@@ -77,11 +78,17 @@ const HomeContextProvider = ({ children }) => {
     }
   };
 
-  const handleDelete = (id) => {
-    const DELETE_APİ = ` https://tr-yös.com/api/v1/users/deletecompare.php?id=${id}&user_id=${userID}&token=${API_KEY}`;
-    setCompare();
+  const handleDelete = async (id) => {
+    deleteCompare(id);
+    setCompare((compare) => compare.filter((item) => item !== id));
+  };
+  const deleteCompare = async (id) => {
     try {
-      axios.delete(DELETE_APİ);
+      await axios.delete(
+        `${DELETE_APİ}id=${id}&user_id=${userID}&token=${API_KEY}`
+      );
+      console.log("delete");
+      getCompare((item) => item !== id);
     } catch (error) {
       console.log(error);
     }
@@ -148,18 +155,6 @@ const HomeContextProvider = ({ children }) => {
       );
       getCompare(currentUser);
       console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteCompare = async (id) => {
-    try {
-      await axios.delete(
-        `${COMPARE_DEL_API}id=${id}&user_id=${currentUser}&token=${API_KEY}`
-      );
-      console.log(`DELETE İŞLEMİ BAŞARILI OLDU BRAVO`);
-      getCompare(currentUser.userID);
     } catch (error) {
       console.log(error);
     }
@@ -371,15 +366,16 @@ const HomeContextProvider = ({ children }) => {
     filteredDepartments,
     postCompare,
     getCompare,
+    deleteCompare,
     handleCompare,
     handleDelete,
     compare,
     setCompare,
-    deleteCompare,
     addLikes,
     removeLikes,
     filteredLikes,
     like,
+    userID,
   };
   return <HomeContext.Provider value={values}>{children}</HomeContext.Provider>;
 };
